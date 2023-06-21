@@ -1,0 +1,32 @@
+﻿version: '3.8'
+
+services:
+  postgres-storage:
+    image: postgres
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./docker/postgres/dumps/:/tmp/
+    ports:
+      - "7777:5432"
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_DB: "postgresStorage"
+      POSTGRES_USER: "postgresStorage"
+      POSTGRES_PASSWORD: "postgresStorage"
+    restart: always
+  postgres-hangfire-storage:
+    image: postgres
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./docker/postgres/dumps/:/tmp/
+    ports:
+      - "7778:5432"
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_DB: "postgresStorageScheduling"
+      POSTGRES_USER: "postgresStorageScheduling"
+      POSTGRES_PASSWORD: "postgresStorageScheduling"
+    restart: always
+volumes:
+  database:
+    driver: local
